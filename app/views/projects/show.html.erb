@@ -1,14 +1,22 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Worker Name:</strong>
-  <%= @project.workers.pluck(:name).join(", ") %>
-</p>
-
-<p>
   <strong>Project Name:</strong>
   <%= @project.name %>
+  <% @project.workers.each do |worker|%>
+  <%= worker.name %>
 </p>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
+
+ <p><%= link_to 'Eliminar', remove_worker_path(worker, @project), method: :delete %></p>
+<% end %>
+
+<%= form_with model: Assigned_project.new, url: assigned_projects_path(@project) local: true do |f| %>
+  <%= f.submit 'Create' %>
+
+  <%= f.select :worker_id, @project.available_workers.pluck (:name, :id) %>
+  <%= f.hidden_field :project_id, value: @project.id %>
+  <%= f.submit 'Create' %>
+<% end %>

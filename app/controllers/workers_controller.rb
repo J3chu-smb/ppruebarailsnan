@@ -10,6 +10,7 @@ class WorkersController < ApplicationController
   # GET /workers/1
   # GET /workers/1.json
   def show
+    @all_projects = @worker.projects
   end
 
   # GET /workers/new
@@ -69,6 +70,6 @@ class WorkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def worker_params
-      params.require(:worker).permit(:name)
+      params.require(:worker).permit(:name, :email)
     end
 end
